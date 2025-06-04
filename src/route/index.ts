@@ -15,6 +15,11 @@ const router = createRouter({
       component: () => import('../views/map/index.vue'),
     },
     {
+      path: '/orchestration',
+      name: 'orchestration',
+      component: () => import('../views/orchestration/index.vue'),
+    },
+    {
       path: '/graph',
       name: 'graph',
       component: () => import('../views/graph/index.vue'),

@@ -42,7 +42,19 @@ export default defineConfig({
 
     vueJsx(),
     cesium(), // 使用 vite-plugin-cesium
-    AutoImport({ resolvers: [ElementPlusResolver()] }),
+    // AutoImport({ resolvers: [ElementPlusResolver()] }),
+
+    AutoImport({
+      imports: ['vue', 'vue-router', 'pinia'],
+      resolvers: [ElementPlusResolver()],
+      // 解决eslint识别不了autoimport引入的方法的报错
+      eslintrc: {
+        enabled: true,
+        filepath: './.eslintrc-auto-import.json',
+        globalsPropValue: true,
+      },
+      dts: true,
+    }),
 
     Components({
       extensions: ['vue', 'md'],

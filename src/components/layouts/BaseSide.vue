@@ -62,7 +62,7 @@ function handleClose(key: string, keyPath: string[]) {
         态势推演
       </template>
     </el-menu-item>
-    <el-menu-item index="3">
+    <el-menu-item index="orchestration">
       <el-icon>
         <Document />
       </el-icon>
