@@ -2,7 +2,7 @@
   <el-config-provider namespace="ep">
     <BaseHeader />
     <div class="main-container flex">
-      <BaseSide />
+      <!-- <BaseSide v-show="false" /> -->
       <div w="full" class="py-0">
         <RouterView />
       </div>

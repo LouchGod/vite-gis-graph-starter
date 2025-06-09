@@ -5,45 +5,65 @@ import { toggleDark } from '~/composables'
 <template>
   <el-menu class="el-menu-demo" mode="horizontal" :ellipsis="false" router>
     <el-menu-item index="/">
-      <div class="flex items-center justify-center gap-2">
+      <div class="flex items-center justify-center">
         <div class="text-xl" i-ep-element-plus />
-        <span>Element Plus</span>
+        <span>XXXXXXX</span>
       </div>
     </el-menu-item>
-    <!-- <el-sub-menu index="2">
+
+    <el-sub-menu index="assume">
       <template #title>
-        Workspace
+        <el-icon>
+          <Location />
+        </el-icon>
+        <span>想定管理</span>
       </template>
-      <el-menu-item index="2-1">
-        item one
-      </el-menu-item>
-      <el-menu-item index="2-2">
-        item two
-      </el-menu-item>
-      <el-menu-item index="2-3">
-        item three
-      </el-menu-item>
-      <el-sub-menu index="2-4">
+      <el-menu-item-group>
+        <el-menu-item index="/assume/area">
+          区域管理
+        </el-menu-item>
+        <el-menu-item index="/assume/weather">
+          天气管理
+        </el-menu-item>
+      </el-menu-item-group>
+      <el-menu-item-group>
+        <el-menu-item index="/assume/comp">
+          编制管理
+        </el-menu-item>
+      </el-menu-item-group>
+      <el-sub-menu index="/assume/plan">
         <template #title>
-          item four
+          <span>方案管理</span>
         </template>
-        <el-menu-item index="2-4-1">
-          item one
-        </el-menu-item>
-        <el-menu-item index="2-4-2">
-          item two
-        </el-menu-item>
-        <el-menu-item index="2-4-3">
-          item three
+        <el-menu-item index="/assume/plan/action">
+          行动管理
         </el-menu-item>
       </el-sub-menu>
     </el-sub-menu>
-    <el-menu-item index="3" disabled>
-      Info
+    <el-menu-item index="/map">
+      <el-icon>
+        <IconMenu />
+      </el-icon>
+      <template #title>
+        态势推演
+      </template>
     </el-menu-item>
-    <el-menu-item index="4">
-      Orders
-    </el-menu-item> -->
+    <el-menu-item index="orchestration">
+      <el-icon>
+        <Document />
+      </el-icon>
+      <template #title>
+        服务编排
+      </template>
+    </el-menu-item>
+    <el-menu-item index="/graph">
+      <el-icon>
+        <Setting />
+      </el-icon>
+      <template #title>
+        图谱分析
+      </template>
+    </el-menu-item>
 
     <el-menu-item h="full" @click="toggleDark()">
       <button
@@ -58,8 +78,8 @@ import { toggleDark } from '~/composables'
 
 <style lang="scss">
 .el-menu-demo {
-  &.ep-menu--horizontal > .ep-menu-item:nth-child(1) {
-    margin-right: auto;
+  &.ep-menu--horizontal > .ep-menu-item:nth-last-child(1) {
+    margin-left: auto;
   }
 }
 </style>

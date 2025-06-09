@@ -38,6 +38,10 @@ onUnmounted(() => {
   if (drawHelper.value) {
     drawHelper.value.destroy()
   }
+  viewer = null
+  mapViewer = null
+  isDragging = false
+  pickedEntity = null
 })
 
 async function initMapViewer() {

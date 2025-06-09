@@ -10,6 +10,8 @@ declare module 'vue' {
     BaseHeader: typeof import('./components/layouts/BaseHeader.vue')['default']
     BaseSide: typeof import('./components/layouts/BaseSide.vue')['default']
     BasicMap: typeof import('./components/BasicMap/index.vue')['default']
+    ChatBox: typeof import('./components/ChatBox.vue')['default']
+    ElBubble: typeof import('element-plus/es')['ElBubble']
     ElButton: typeof import('element-plus/es')['ElButton']
     ElConfigProvider: typeof import('element-plus/es')['ElConfigProvider']
     ElDatePicker: typeof import('element-plus/es')['ElDatePicker']

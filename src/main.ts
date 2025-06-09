@@ -9,10 +9,12 @@ import { createApp } from 'vue'
 
 // or use cdn, uncomment cdn link in `index.html`
 
-import { routes } from 'vue-router/auto-routes'
+// import { routes } from 'vue-router/auto-routes'
 import App from './App.vue'
 
 import router from './route'
+
+import 'normalize.css'
 import 'cesium/Build/Cesium/Widgets/widgets.css'
 // import '~/styles/element/index.scss'
 
