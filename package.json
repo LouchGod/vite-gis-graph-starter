@@ -17,10 +17,12 @@
     "typecheck": "vue-tsc --noEmit"
   },
   "dependencies": {
+    "@antv/g6": "^5.0.48",
     "@antv/x6": "^2.18.1",
     "@antv/x6-vue-shape": "^2.1.2",
     "@element-plus/icons-vue": "^2.3.1",
     "@iconify-json/carbon": "^1.2.8",
+    "@iconify-json/material-symbols": "^1.2.25",
     "@vueuse/core": "^12.0.0",
     "cesium": "^1.129.0",
     "element-plus": "^2.9.0",
