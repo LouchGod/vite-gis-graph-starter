@@ -30,7 +30,7 @@ function handleSelectItem(item) {
   </div>
 </template>
 
-<style scoped>
+<style lang="scss" scoped>
 .graph-analysis {
   display: flex;
   height: calc(100vh - 60px);

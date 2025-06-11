@@ -22,8 +22,8 @@ const layouts = [
     icon: 'i-material-symbols-graph-6',
   },
   {
-    name: 'compact-box',
-    label: '树形布局',
+    name: 'fruchterman',
+    label: 'MDS布局',
     icon: 'i-material-symbols-graph-4',
   },
   {

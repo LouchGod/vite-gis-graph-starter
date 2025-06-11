@@ -1,6 +1,7 @@
 <script setup>
 import { CanvasEvent, EdgeEvent, Graph, GraphEvent, NodeEvent } from '@antv/g6'
 import { onMounted, ref, watch } from 'vue'
+import { G6Graph } from '../utils'
 
 const props = defineProps({
   layout: String,
@@ -15,24 +16,129 @@ onMounted(() => {
 })
 
 function initGraph() {
-  const data = {
-    nodes: [
-      { id: 'node-1', style: { x: 50, y: 50 } },
-      { id: 'node-2', style: { x: 150, y: 50 } },
-    ],
-    edges: [{ source: 'node-1', target: 'node-2' }],
+  const startTime = new Date('2023-08-01').getTime()
+  const diff = 3600 * 24 * 1000
+  const timebarData = [10, 2, 3, 4, 15, 10, 5, 0, 3, 1].map((value, index) => ({
+    time: new Date(startTime + index * diff),
+    value,
+    label: new Date(startTime + index * diff).toLocaleString(),
+  }))
+  const graphData = {
+    nodes: Array.from({ length: 49 }).fill(0).map((_, index) => ({
+      id: `node-${index}`,
+      data: {
+        timestamp: startTime + (index % 10) * diff,
+        value: index % 20,
+        label: new Date(startTime + (index % 10) * diff).toLocaleString(),
+      },
+    })),
+    edges: Array.from({ length: 49 }).fill(0).map((_, i) => ({
+      id: `edge-${i}`,
+      source: `node-${i % 30}`,
+      target: `node-${(i % 20) + 29}`,
+      data: {
+        edgeType: 'e1',
+      },
+    })),
   }
-  graph = new Graph({
+
+  const g6Graph = new G6Graph({
     container: container.value,
-    data,
-    width: container.value.clientWidth,
-    height: container.value.clientHeight,
-    layout: { type: props.layout || 'force' },
-    behaviors: ['drag-canvas', 'zoom-canvas', 'click-select'],
-    // ...其他配置
+    data: graphData,
+    // plugins: [
+    //   {
+    //     type: 'timebar',
+    //     key: 'timebar',
+    //     data: timebarData,
+    //     width: 1300,
+    //     height: 40,
+    //     loop: true,
+    //     // timebarType: 'chart',
+    //   },
+    // ],
+
+    plugins: [
+      {
+        type: 'timebar',
+        key: 'timebar',
+        data: timebarData,
+        width: 1300,
+        height: 60,
+        loop: true,
+        className: 'my-timebar-class',
+        padding: [0, 20, 0, 20],
+        // timebarType: 'chart',
+      },
+      {
+        type: 'contextmenu',
+        trigger: 'contextmenu', // 'click' or 'contextmenu'
+        onClick: (value, target, current) => {
+          // alert(`You have clicked the「${value}」item,${target},${current}`)
+          console.log('------sss:', value, target, current)
+        },
+        getItems: () => {
+          return [
+            { name: '展开一度关系', value: 'spread' },
+            { name: '查看详情', value: 'detail' },
+          ]
+        },
+        enable: e => e.targetType === 'node',
+      },
+      {
+        type: 'toolbar',
+        position: 'left-top',
+        className: 'my-toolbar-class',
+        // onClick: (item) => {
+        //   alert(`item clicked:${item}`)
+        // },
+        getItems: () => {
+          // G6 内置了 9 个 icon，分别是 zoom-in、zoom-out、redo、undo、edit、delete、auto-fit、export、reset
+          return [
+            { id: 'zoom-in', value: 'zoom-in' },
+            { id: 'zoom-out', value: 'zoom-out' },
+            { id: 'redo', value: 'redo' },
+            { id: 'undo', value: 'undo' },
+            { id: 'edit', value: 'edit' },
+            { id: 'delete', value: 'delete' },
+            { id: 'auto-fit', value: 'auto-fit' },
+            { id: 'export', value: 'export' },
+            { id: 'reset', value: 'reset' },
+
+            { id: 'request-fullscreen', value: 'request-fullscreen' },
+            { id: 'exit-fullscreen', value: 'exit-fullscreen' },
+          ]
+        },
+
+        onClick: (value) => {
+        // redo、undo 需要配合 history 插件使用
+          const history = graph.getPluginInstance('history')
+          switch (value) {
+            case 'zoom-in':
+              graph.zoomTo()
+              break
+            case 'zoom-out':
+              graph.zoomTo()
+              break
+            case 'undo':
+              history?.undo()
+              break
+            case 'redo':
+              history?.redo()
+              break
+            case 'auto-fit':
+              graph.fitView()
+              break
+            default:
+              break
+          }
+        },
+      },
+    ],
   })
 
+  window._graph = graph = g6Graph.graph
   graph.render()
+  // graph.setTheme('light')
 
   initGraphEvents()
 }
@@ -111,10 +217,21 @@ watch(() => props.layout, async (newLayout) => {
   <div ref="container" class="graph-canvas" />
 </template>
 
-  <style scoped>
+  <style lang="scss" scoped>
   .graph-canvas {
   flex: 1;
-  min-width: 0;
+  min-width: 500px;
   height: calc(100vh - 60px);
+  overflow: hidden;
+
+  :deep(.g6-toolbar) {
+    background: var(--el-bg-color-page);
+  }
+
+  :deep(.g6-timebar) {
+    // background: var(--el-bg-color-page);
+  }
 }
+
+// .graph-canvas
 </style>
